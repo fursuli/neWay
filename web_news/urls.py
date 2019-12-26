@@ -21,7 +21,7 @@ from django.shortcuts import redirect
 from django.urls import include
 
 urlpatterns = [
-    url(r'^$', lambda _: redirect('admin:index'), name='adminpage'),
+    # url(r'^$', lambda _: redirect('admin:index'), name='adminpage'),
     url(r'^neway/admin/', admin.site.urls),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^neway/', include('django.contrib.auth.urls')),
