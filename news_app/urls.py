@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from django.urls import re_path
 from ckeditor_uploader import views as uploader_views
 from django.views.decorators.cache import never_cache
@@ -7,6 +8,7 @@ from . import views
 
 urlpatterns = [
     re_path(r'^$', views.index, name='index'),
+    re_path(r'^$', lambda _: redirect('index')),
     re_path(r'^ckeditor/upload/', uploader_views.upload, name='ckeditor_upload'),
     re_path(r'^ckeditor/browse/', never_cache(uploader_views.browse), name='ckeditor_browse'),
     re_path(r'^signUp/$', views.signup, name='signUp'),
