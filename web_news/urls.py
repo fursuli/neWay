@@ -24,7 +24,7 @@ urlpatterns = [
     # url(r'^$', lambda _: redirect('admin:index'), name='adminpage'),
     url(r'^admin/', admin.site.urls),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
-    url(r'^$', include('django.contrib.auth.urls')),
-    url(r'^$', include('news_app.urls')),
+    url(r'^', include('django.contrib.auth.urls')),
+    url(r'^', include('news_app.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
