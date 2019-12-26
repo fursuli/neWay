@@ -28,7 +28,10 @@ DEBUG = bool( os.environ.get('DJANGO_DEBUG', True) )
 
 # Application definition
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost'
+    'new-way.herokuapp.com',
+]
 
 
 LOGIN_REDIRECT_URL = 'index'
