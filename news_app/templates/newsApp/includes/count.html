@@ -1,0 +1,14 @@
+
+{% block content %}
+
+<ul>
+    <li><a href="{% url 'users' %}"><strong>News makers</strong></a> <strong>for now:</strong> {{ num_users }}</li>
+        {% if user.is_staff %}
+    <li><a href="{% url 'approved' %}"><strong>Approved news</strong></a> {{ approved_posts }}</li>
+    <li><a href="{% url 'not_approved' %}"><strong>Not approved:</strong></a> {{ not_approved_posts }}</li>
+        {% else %}
+    <li><a href="{% url 'approved' %}"><strong>News</strong></a> <strong>on site:</strong>{{ approved_posts }}</li>
+        {% endif %}
+</ul>
+
+{% endblock %}

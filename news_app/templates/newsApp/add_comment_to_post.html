@@ -1,0 +1,17 @@
+{% extends "newsApp/base_generic.html" %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+
+    <h1>New comment</h1>
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Send</button>
+    </form>
+
+    {% else %}
+        <p>I think, you are not authenticated</p>
+    {% endif %}
+{% endblock %}

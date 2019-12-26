@@ -1,0 +1,23 @@
+{% extends "newsApp/base_generic.html" %}
+
+{% block content %}
+{% if user.is_staff %}
+
+    <h1>Last news</h1>
+
+    {% if nota_posts_list %}
+<ul>
+    {% for post in nota_posts_list%}
+        <li class="block">
+            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a> (<a href="{{ user.get_absolute_url }}"><i>{{ post.owner }}</i></a>)
+            <a href="{% url 'adminpage' %}" class="button">Change Status</a>
+        </li>
+    {% endfor %}
+</ul>
+    {% else %}
+    <p>There are no news posted yet.</p>
+    {% endif %}
+  </head>
+</html>
+    {% endif %}
+{% endblock %}

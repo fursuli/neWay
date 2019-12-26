@@ -1,0 +1,41 @@
+{% extends "newsApp/base_generic.html" %}
+
+{% block content %}
+
+<center><h1 class="block" style="width:800px;">Last news</h1></center>
+<div>
+<h4><i>You have something to say?</i></h4>
+<a href="{% url 'creating-news' %}" >Create new</a>
+</div>
+
+    {% if a_posts_list %}
+<ul>
+    {% for post in a_posts_list%}
+
+    <div class="block" onclick="location.href='{{ post.get_absolute_url }}'" style="cursor:pointer;">
+        <div class="highlight">
+            <h3>{{ post.title }}</h3>
+
+            {% if user.is_staff %}
+                <div>
+                    <a href="{% url 'adminpage' %}" class="button">Change Status</a>
+                </div>
+            {% endif %}
+
+            {% if post.description %}
+                <div class="post_description post_item">
+                    {{ post.description |safe }}
+                </div>
+            {% endif %}
+            <div>
+                <p>Comments: {{ post.comments.count }}</p>
+            </div>
+    </div></div>
+
+    {% endfor %}
+</ul>
+    {% else %}
+    <p>There are no news posted yet.</p>
+    {% endif %}
+
+{% endblock %}

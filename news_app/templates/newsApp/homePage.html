@@ -1,0 +1,41 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title alight="CENTER"> He he he</title>
+</head>
+<body>
+
+<div class="block">
+<center><h2><i>It's home.
+        <br>
+        Safe.
+        <br>
+        Maybe sweet.
+</i></h2></center>
+</div>
+
+{% extends "newsApp/base_generic.html" %}
+
+<div>
+    {% block content %}
+    <div>
+        {% if user.is_authenticated %}
+          Hi {{ user.username }}!
+
+            <a href="{% url 'logout' %}">Logout</a>
+        {% else %}
+        <p>You are not logged in</p>
+            <a href="{% url 'login' %}">Login</a>
+        <br>
+            <a href="{% url 'signUp' %}">Create account</a>
+        {% endif %}
+    </div>
+        {% include "newsApp/includes/count.html" %}
+    <div>
+        <a href="{{ user.get_absolute_url }}">My news</a>
+    </div>
+    {% endblock %}
+</div>
+
+</body>
+</html>

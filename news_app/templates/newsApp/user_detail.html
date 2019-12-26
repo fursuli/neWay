@@ -1,0 +1,71 @@
+{% extends "newsApp/base_generic.html" %}
+
+{% block content %}
+
+
+<h1> {{ newsmaker.username }}</h1>
+{% if user.is_staff %}
+
+    {% if newsmaker.is_staff %}
+        <p style="font-family:courier; font-size:15px;">(administrator)</p>
+        {% elif newsmaker.is_moderator %}
+        <p style="font-family:courier; font-size:15px;"><(moderator)</p>
+        {% else %}
+        <p style="font-family:courier; font-size:15px;">(common user)</p>
+    {% endif %}
+    <div>
+        <a href="{% url 'adminpage' %}" class="button">Change Status</a>
+    </div>
+{% endif %}
+
+<hr>
+{% if user.is_staff %}
+    {% for post in newsmaker.post_owner.all %}
+        <div class="block" onclick="location.href='{{ post.get_absolute_url }}'" style="cursor:pointer;">
+            <div class="highlight">
+                <h3>{{ post.title }}</h3>
+                    <div>
+                        {% if post.moderation %}
+                       <p class="button" style="background-color:green;">approved</p>
+                        {% else %}
+                        <p class="button" style="background-color:red;">not approved</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <a href="{% url 'adminpage' %}" class="button">Change Status</a>
+                    </div>
+                {% if post.description %}
+                    <div class="post_description post_item">
+                        {{ post.description |safe }}
+                    </div>
+                {% endif %}
+                <div class="highlight">
+                    <p>Comments: {{ post.comments.count }}</p>
+                </div>
+        </div></div>
+    {% empty %}
+        <p>No posts published by {{ newsmaker.username }} yet :(</p>
+    {% endfor %}
+
+{% else %}
+    {% for post in newsmaker.post_owner.all %}
+    {% if post.moderation %}
+        <div class="block" onclick="location.href='{{ post.get_absolute_url }}'" style="cursor:pointer;">
+            <div class="highlight">
+                <h3>{{ post.title }}</h3>
+
+                {% if post.description %}
+                    <div class="post_description post_item">
+                        {{ post.description |safe }}
+                    </div>
+                {% endif %}
+                <div class="highlight">
+                    <p>Comments: {{ post.comments.count }}</p>
+                </div>
+        </div></div>
+    {% endif %}
+    {% empty %}
+        <p>No posts published by {{ newsmaker.username }} yet :(</p>
+    {% endfor %}
+{% endif %}
+{% endblock %}
