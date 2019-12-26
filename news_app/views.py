@@ -50,11 +50,27 @@ def add_comment_to_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
         form = CommentForm(request.POST)
+        newsmaker = Post.owner
         if form.is_valid():
             comment = form.save(commit=False)
             comment.related_post = post
             comment.author = request.user
             comment.save()
+
+
+            current_site = get_current_site(request)
+            mail_subject = 'You have a new comment.'
+            message = render_to_string('notifications/comments.html', {
+                'user': newsmaker,
+                'domain': current_site.domain,
+                'pk':urlsafe_base64_encode(force_bytes(post.pk)),
+            })
+            to_email = post.owner.email
+            email = EmailMessage(
+                        mail_subject, message, to=[to_email]
+            )
+            email.send()
+
             return redirect('post-details', pk=post.pk)
     else:
         form = CommentForm()
@@ -69,12 +85,11 @@ def signup(request):
             user.is_active = False
             user.save()
             current_site = get_current_site(request)
-            mail_subject = 'Activate your blog account.'
+            mail_subject = 'Activate your account.'
             message = render_to_string('registration/acc_active_email.html', {
                 'user': user,
                 'domain': current_site.domain,
                 'uid':urlsafe_base64_encode(force_bytes(user.pk)),
-                                       # .decode(),
                 'token':account_activation_token.make_token(user),
             })
             to_email = form.cleaned_data.get('email')
