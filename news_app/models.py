@@ -20,7 +20,7 @@ class Newsmaker(AbstractUser):
     is_user = models.BooleanField(default=True)
 
     email = models.EmailField(blank=False, unique=True)
-    USERNAME_FIELD = 'email'
+    # USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
     first_name = models.CharField(max_length=36, blank=True)
