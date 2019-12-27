@@ -1,3 +1,4 @@
+from django.contrib import admin
 from django.shortcuts import redirect
 from django.urls import re_path
 from ckeditor_uploader import views as uploader_views
